@@ -34,7 +34,7 @@ MODELS = {
         ]
     ),
     'ruclip-vit-base-patch32-384': dict(
-        repo_id='ai-forever/ruclip-vit-base-patch32-384',
+        repo_id='/content/ru-clip/ruclip-vit-base-patch32-384',
         filenames=[
             'bpe.model', 'config.json', 'pytorch_model.bin'
         ]
