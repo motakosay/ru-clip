@@ -48,7 +48,7 @@ MODELS = {
 }
 
 
-def load(name, device='cpu', cache_dir='/tmp/ruclip', use_auth_token=None):
+def load(name, device='cpu', cache_dir='/tmp/ruclip', use_auth_token=None, local_files_only=False):
     """Load a ruCLIP model"""
     assert name in MODELS, f'All models: {MODELS.keys()}'
     config = MODELS[name]
@@ -56,20 +56,18 @@ def load(name, device='cpu', cache_dir='/tmp/ruclip', use_auth_token=None):
     cache_dir = os.path.join(cache_dir, name)
 
     for filename in config['filenames']:
-        # ✅ Correct usage without invalid URL
         hf_hub_download(
             repo_id=repo_id,
             filename=filename,
             cache_dir=cache_dir,
             force_filename=filename,
-            local_files_only=True,
-            use_auth_token=use_auth_token
+            use_auth_token=use_auth_token,
+            local_files_only=local_files_only,
         )
 
     clip = CLIP.from_pretrained(cache_dir).eval().to(device)
     clip_processor = RuCLIPProcessor.from_pretrained(cache_dir)
     return clip, clip_processor
-
 
 __all__ = ['processor', 'model', 'predictor', 'CLIP', 'RuCLIPProcessor', 'Predictor', 'MODELS', 'load']
 __version__ = '0.0.2'
