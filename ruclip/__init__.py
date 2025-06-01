@@ -70,8 +70,7 @@ def load(name, device='cpu', cache_dir='/tmp/ruclip', use_auth_token=None):
     repo_id = config['repo_id']
     cache_dir = os.path.join(cache_dir, name)
     for filename in config['filenames']:
-        config_file_url = hf_hub_url(repo_id=repo_id, filename=f'{filename}')
-        hf_hub_download(config_file_url, cache_dir=cache_dir, force_filename=filename, use_auth_token=use_auth_token)
+        hf_hub_download(repo_id=repo_id, filename=filename, cache_dir=cache_dir, force_filename=filename, local_files_only=True)
 
     clip = CLIP.from_pretrained(cache_dir).eval().to(device)
     clip_processor = RuCLIPProcessor.from_pretrained(cache_dir)
