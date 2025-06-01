@@ -49,28 +49,22 @@ MODELS = {
 
 
 def load(name, device='cpu', cache_dir='/tmp/ruclip', use_auth_token=None):
-    """Load a ruCLIP model
-    Parameters
-    ----------
-    name : str
-        A model name listed in ruclip.MODELS.keys()
-    device : Union[str, torch.device]
-        The device to put the loaded model
-    cache_dir: str
-        path to download the model files; by default, it uses "/tmp/ruclip"
-    Returns
-    -------
-    clip : torch.nn.Module
-        The ruCLIP model
-    clip_processor : ruclip.processor.RuCLIPProcessor
-        A ruCLIP processor which performs tokenization and image preprocessing
-    """
+    """Load a ruCLIP model"""
     assert name in MODELS, f'All models: {MODELS.keys()}'
     config = MODELS[name]
     repo_id = config['repo_id']
     cache_dir = os.path.join(cache_dir, name)
+
     for filename in config['filenames']:
-        hf_hub_download(repo_id=repo_id, filename=filename, cache_dir=cache_dir, force_filename=filename, local_files_only=True)
+        # ✅ Correct usage without invalid URL
+        hf_hub_download(
+            repo_id=repo_id,
+            filename=filename,
+            cache_dir=cache_dir,
+            force_filename=filename,
+            local_files_only=True,
+            use_auth_token=use_auth_token
+        )
 
     clip = CLIP.from_pretrained(cache_dir).eval().to(device)
     clip_processor = RuCLIPProcessor.from_pretrained(cache_dir)
