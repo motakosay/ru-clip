@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from huggingface_hub import hf_hub_url, hf_hub_download
+from huggingface_hub import hf_hub_download
 
 from . import model, processor, predictor
 from .model import CLIP
