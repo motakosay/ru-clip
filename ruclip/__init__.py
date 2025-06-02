@@ -48,7 +48,7 @@ MODELS = {
 }
 
 
-def load(name, device='cpu', cache_dir='/tmp/ruclip', use_auth_token=None, local_files_only=False):
+def load(name, device='cpu', cache_dir='/tmp/ruclip', use_auth_token=None):
     """Load a ruCLIP model"""
     assert name in MODELS, f'All models: {MODELS.keys()}'
     config = MODELS[name]
@@ -61,8 +61,7 @@ def load(name, device='cpu', cache_dir='/tmp/ruclip', use_auth_token=None, local
             filename=filename,
             cache_dir=cache_dir,
             force_filename=filename,
-            use_auth_token=use_auth_token,
-            local_files_only=local_files_only
+            use_auth_token=use_auth_token
         )
 
     clip = CLIP.from_pretrained(cache_dir).eval().to(device)
