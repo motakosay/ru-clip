@@ -62,7 +62,7 @@ def load(name, device='cpu', cache_dir='/tmp/ruclip', use_auth_token=None, local
             cache_dir=cache_dir,
             force_filename=filename,
             use_auth_token=use_auth_token,
-            local_files_only=local_files_only,
+            local_files_only=local_files_only
         )
 
     clip = CLIP.from_pretrained(cache_dir).eval().to(device)
